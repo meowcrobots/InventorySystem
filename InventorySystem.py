@@ -51,9 +51,12 @@ def add_product():
         cl_category.append(cb_male.cget("text") if var_male.get() == 1 else 0)
         cl_category.append(cb_fem.cget("text") if var_fem.get() == 1 else 0)
         cl_category.append(cb_uni.cget("text") if var_uni.get() == 1 else 0)
-        cl_category.append(cb_shirt.cget("text") if var_shirt.get() == 1 else 0)
-        cl_category.append(cb_pants.cget("text") if var_pants.get() == 1 else 0)
-        cl_category.append(cb_lsleeve.cget("text") if var_lsleeve.get() == 1 else 0)
+        cl_category.append(cb_shirt.cget(
+            "text") if var_shirt.get() == 1 else 0)
+        cl_category.append(cb_pants.cget(
+            "text") if var_pants.get() == 1 else 0)
+        cl_category.append(cb_lsleeve.cget(
+            "text") if var_lsleeve.get() == 1 else 0)
 
         cl_category = ', '.join(item for item in cl_category if item != 0)
 
@@ -83,13 +86,10 @@ def add_product():
         c.execute("INSERT INTO Inventory VALUES (?, ?, ?, ?, ?, ?, ?)",
                   (product_id, name, avails, stocks, price, cl_size, cl_category))
 
-
-
         conn.commit()
         view()
         add_window.destroy()
         root.deiconify()
-
 
     root.withdraw()
     add_window = Toplevel(root)
@@ -97,7 +97,8 @@ def add_product():
     add_window.geometry("900x400")
 
     # tile
-    title = tk.Label(add_window, text="ADD PRODUCT", font=("Times New Roman", 12))
+    title = tk.Label(add_window, text="ADD PRODUCT",
+                     font=("Times New Roman", 12))
     title.pack(pady=20, fill="x")
     title.config(anchor="center")
 
@@ -106,21 +107,24 @@ def add_product():
     add_frame.pack(fill="both", expand=True, padx=2, pady=2)
 
     # column 1 = product_id
-    label_product_id = tk.Label(add_frame, font=("Segoe UI", 11), text="Product ID:", pady=8)
+    label_product_id = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Product ID:", pady=8)
     label_product_id.grid(row=0, column=0, sticky="w")
 
     entry_product_id = tk.Entry(add_frame, font=("Segoe UI", 11))
     entry_product_id.grid(row=0, column=1, padx=22, sticky="w")
 
     # column 2 = name
-    label_name = tk.Label(add_frame, font=("Segoe UI", 11), text="Product Name:", pady=8)
+    label_name = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Product Name:", pady=8)
     label_name.grid(row=1, column=0, sticky="w")
 
     entry_name = tk.Entry(add_frame, font=("Segoe UI", 11))
     entry_name.grid(row=1, column=1, padx=22, sticky="w")
 
     # Column 3 = Availability
-    label_availability = tk.Label(add_frame, font=("Segoe UI", 11), text="Fabric:", pady=8)
+    label_availability = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Fabric:", pady=8)
     label_availability.grid(row=2, column=0, sticky="w")
 
     current = tk.StringVar()
@@ -131,51 +135,61 @@ def add_product():
     cmb_avail.grid(row=2, column=1, padx=22, sticky="w")
 
     # column 4 stocks
-    label_stocks = tk.Label(add_frame, font=("Segoe UI", 11), text="Stocks:", pady=8)
+    label_stocks = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Stocks:", pady=8)
     label_stocks.grid(row=3, column=0, sticky="w")
 
     entry_stocks = tk.Entry(add_frame, font=("Segoe UI", 11))
     entry_stocks.grid(row=3, column=1, padx=22, sticky="w")
 
     # column 5 = price
-    label_price = tk.Label(add_frame, font=("Segoe UI", 11), text="Price:", pady=8)
+    label_price = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Price:", pady=8)
     label_price.grid(row=4, column=0, sticky="w")
 
     entry_price = tk.Entry(add_frame, font=("Segoe UI", 11))
     entry_price.grid(row=4, column=1, padx=22, sticky="w")
 
     # column 6 = size
-    label_packaging = tk.Label(add_frame, font=("Segoe UI", 11), text="Size:", pady=8)
+    label_packaging = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Size:", pady=8)
     label_packaging.grid(row=5, column=0, sticky="w")
 
     sizes = ['XS', 'S', 'M', 'L               ', 'XL']
     rd_grp = IntVar()
     for index in range(len(sizes)):
-        rd_size = Radiobutton(add_frame, font=("Segoe UI", 11), text=sizes[index], variable=rd_grp, value=index)
+        rd_size = Radiobutton(add_frame, font=(
+            "Segoe UI", 11), text=sizes[index], variable=rd_grp, value=index)
         rd_size.grid(row=5, column=1 + index, sticky="w")
 
     # column 7 = category
-    label_category = tk.Label(add_frame, font=("Segoe UI", 11), text="Category:", pady=8)
+    label_category = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Category:", pady=8)
     label_category.grid(row=6, column=0, sticky="w")
 
     var_male = IntVar()
-    cb_male = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Male", variable=var_male, onvalue=1, offvalue=0)
+    cb_male = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Male", variable=var_male, onvalue=1, offvalue=0)
     cb_male.grid(row=6, column=1, padx=2, sticky="w")
 
     var_fem = IntVar()
-    cb_fem = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Female", variable=var_fem, onvalue=1, offvalue=0)
+    cb_fem = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Female", variable=var_fem, onvalue=1, offvalue=0)
     cb_fem.grid(row=6, column=2, sticky="w")
 
     var_uni = IntVar()
-    cb_uni = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Unisex", variable=var_uni, onvalue=1, offvalue=0)
+    cb_uni = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Unisex", variable=var_uni, onvalue=1, offvalue=0)
     cb_uni.grid(row=6, column=3, sticky="w")
 
     var_shirt = IntVar()
-    cb_shirt = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Shirt", variable=var_shirt, onvalue=1, offvalue=0)
+    cb_shirt = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Shirt", variable=var_shirt, onvalue=1, offvalue=0)
     cb_shirt.grid(row=7, column=1, sticky="w")
 
     var_pants = IntVar()
-    cb_pants = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Pants", variable=var_pants, onvalue=1, offvalue=0)
+    cb_pants = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Pants", variable=var_pants, onvalue=1, offvalue=0)
     cb_pants.grid(row=7, column=2, sticky="w")
 
     var_lsleeve = IntVar()
@@ -214,7 +228,8 @@ def add_product():
     close_button.pack(side="right", pady=2)
 
 
-add_button = tk.Button(top_frame, text="Add", font=("Segoe UI", 10), width=10, bg="white", command=add_product)
+add_button = tk.Button(top_frame, text="Add", font=(
+    "Segoe UI", 10), width=10, bg="white", command=add_product)
 add_button.pack(side="left", padx=10)
 
 
@@ -256,9 +271,12 @@ def edit_product():
         cl_category.append(cb_male.cget("text") if var_male.get() == 1 else 0)
         cl_category.append(cb_fem.cget("text") if var_fem.get() == 1 else 0)
         cl_category.append(cb_uni.cget("text") if var_uni.get() == 1 else 0)
-        cl_category.append(cb_shirt.cget("text") if var_shirt.get() == 1 else 0)
-        cl_category.append(cb_pants.cget("text") if var_pants.get() == 1 else 0)
-        cl_category.append(cb_lsleeve.cget("text") if var_lsleeve.get() == 1 else 0)
+        cl_category.append(cb_shirt.cget(
+            "text") if var_shirt.get() == 1 else 0)
+        cl_category.append(cb_pants.cget(
+            "text") if var_pants.get() == 1 else 0)
+        cl_category.append(cb_lsleeve.cget(
+            "text") if var_lsleeve.get() == 1 else 0)
 
         cl_category = ', '.join(item for item in cl_category if item != 0)
 
@@ -296,7 +314,8 @@ def edit_product():
     edit_window.geometry("900x400")
 
     # tile
-    title = tk.Label(edit_window, text="EDIT PRODUCT", font=("Times New Roman", 12))
+    title = tk.Label(edit_window, text="EDIT PRODUCT",
+                     font=("Times New Roman", 12))
     title.pack(pady=20, fill="x")
     title.config(anchor="center")
 
@@ -305,7 +324,8 @@ def edit_product():
     add_frame.pack(fill="both", expand=True, padx=2, pady=2)
 
     # column 1 = product_id
-    label_product_id = tk.Label(add_frame, font=("Segoe UI", 11), text="Product ID:", pady=8)
+    label_product_id = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Product ID:", pady=8)
     label_product_id.grid(row=0, column=0, sticky="w")
 
     entry_product_id = tk.Entry(add_frame, font=("Segoe UI", 11))
@@ -313,7 +333,8 @@ def edit_product():
     entry_product_id.insert(0, tbl_view.item(selected_item)["values"][0])
 
     # column 2 = name
-    label_name = tk.Label(add_frame, font=("Segoe UI", 11), text="Product Name:", pady=8)
+    label_name = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Product Name:", pady=8)
     label_name.grid(row=1, column=0, sticky="w")
 
     entry_name = tk.Entry(add_frame, font=("Segoe UI", 11))
@@ -321,7 +342,8 @@ def edit_product():
     entry_name.insert(0, tbl_view.item(selected_item)["values"][1])
 
     # Column 3 = Availability
-    label_availability = tk.Label(add_frame, font=("Segoe UI", 11), text="Fabric:", pady=8)
+    label_availability = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Fabric:", pady=8)
     label_availability.grid(row=2, column=0, sticky="w")
 
     current = tk.StringVar()
@@ -332,7 +354,8 @@ def edit_product():
     cmb_avail.set(tbl_view.item(selected_item)["values"][2])
 
     # column 4 stocks
-    label_stocks = tk.Label(add_frame, font=("Segoe UI", 11), text="Stocks:", pady=8)
+    label_stocks = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Stocks:", pady=8)
     label_stocks.grid(row=3, column=0, sticky="w")
 
     entry_stocks = tk.Entry(add_frame, font=("Segoe UI", 11))
@@ -340,7 +363,8 @@ def edit_product():
     entry_stocks.insert(0, tbl_view.item(selected_item)["values"][3])
 
     # column 5 = price
-    label_price = tk.Label(add_frame, font=("Segoe UI", 11), text="Price:", pady=8)
+    label_price = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Price:", pady=8)
     label_price.grid(row=4, column=0, sticky="w")
 
     entry_price = tk.Entry(add_frame, font=("Segoe UI", 11))
@@ -348,42 +372,50 @@ def edit_product():
     entry_price.insert(0, tbl_view.item(selected_item)["values"][4])
 
     # column 6 = size
-    label_packaging = tk.Label(add_frame, font=("Segoe UI", 11), text="Size:", pady=8)
+    label_packaging = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Size:", pady=8)
     label_packaging.grid(row=5, column=0, sticky="w")
 
     sizes = ['XS', 'S', 'M', 'L ', 'XL']
     rd_grp = IntVar()
     for index in range(len(sizes)):
-        rd_size = Radiobutton(add_frame, font=("Segoe UI", 11), text=sizes[index], variable=rd_grp, value=index)
+        rd_size = Radiobutton(add_frame, font=(
+            "Segoe UI", 11), text=sizes[index], variable=rd_grp, value=index)
         rd_size.grid(row=5, column=1 + index, sticky="w")
         # rd_grp.set(tbl_view.item(selected_item)["values"][5])
 
     # column 7 = category
-    label_category = tk.Label(add_frame, font=("Segoe UI", 11), text="Category:", pady=8)
+    label_category = tk.Label(add_frame, font=(
+        "Segoe UI", 11), text="Category:", pady=8)
     label_category.grid(row=6, column=0, sticky="w")
 
     var_male = IntVar()
-    cb_male = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Male", variable=var_male, onvalue=1, offvalue=0)
+    cb_male = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Male", variable=var_male, onvalue=1, offvalue=0)
     cb_male.grid(row=6, column=1, padx=2, sticky="w")
     # var_male.set(tbl_view.item(selected_item)["values"][6])
 
     var_fem = IntVar()
-    cb_fem = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Female", variable=var_fem, onvalue=1, offvalue=0)
+    cb_fem = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Female", variable=var_fem, onvalue=1, offvalue=0)
     cb_fem.grid(row=6, column=2, sticky="w")
     # var_fem.set(tbl_view.item(selected_item)["values"][6])
 
     var_uni = IntVar()
-    cb_uni = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Unisex", variable=var_uni, onvalue=1, offvalue=0)
+    cb_uni = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Unisex", variable=var_uni, onvalue=1, offvalue=0)
     cb_uni.grid(row=6, column=3, sticky="w")
     # var_uni.set(tbl_view.item(selected_item)["values"][6])
 
     var_shirt = IntVar()
-    cb_shirt = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Shirt", variable=var_shirt, onvalue=1, offvalue=0)
+    cb_shirt = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Shirt", variable=var_shirt, onvalue=1, offvalue=0)
     cb_shirt.grid(row=7, column=1, sticky="w")
     # var_shirt.set(tbl_view.item(selected_item)["values"][6])
 
     var_pants = IntVar()
-    cb_pants = tk.Checkbutton(add_frame, font=("Segoe UI", 10), text="Pants", variable=var_pants, onvalue=1, offvalue=0)
+    cb_pants = tk.Checkbutton(add_frame, font=(
+        "Segoe UI", 10), text="Pants", variable=var_pants, onvalue=1, offvalue=0)
     cb_pants.grid(row=7, column=2, sticky="w")
     # var_pants.set(tbl_view.item(selected_item)["values"][6])
 
@@ -399,7 +431,8 @@ def edit_product():
     button_frame = tk.Frame(add_frame)
     button_frame.grid(row=1, column=2, padx=50, pady=2)
 
-    save_button = tk.Button(button_frame, text="  Save  ", font=("Segoe UI", 10), width=10, bg="white", command=submit)
+    save_button = tk.Button(button_frame, text="  Save  ", font=(
+        "Segoe UI", 10), width=10, bg="white", command=submit)
     save_button.pack(side="left", pady=2)
 
     # frame for back button
@@ -424,7 +457,8 @@ def edit_product():
 
 
 # call the function to open the edit window
-edit_button = tk.Button(top_frame, text="Edit", font=("Segoe UI", 10), width=10, bg="white", command=edit_product)
+edit_button = tk.Button(top_frame, text="Edit", font=(
+    "Segoe UI", 10), width=10, bg="white", command=edit_product)
 edit_button.pack(side="left", padx=10)
 
 
@@ -436,23 +470,26 @@ def delete_product():
     print("Deleted item data: ", selected_data)
     selected_item = tbl_view.selection()
     if selected_item:
-        result = messagebox.askyesno("Inventory System", "Are you sure you want to delete the selected item?")
+        result = messagebox.askyesno(
+            "Inventory System", "Are you sure you want to delete the selected item?")
         if result:
             tbl_view.delete(selected_item)
     else:
-        messagebox.showerror("Inventory System", "Please select an item to delete.")
+        messagebox.showerror("Inventory System",
+                             "Please select an item to delete.")
     query = "DELETE FROM Inventory WHERE PID = ? AND name = ?"
     c.execute(query, (selected_data[0], selected_data[1]))
     conn.commit()
 
 
-delete_button = tk.Button(top_frame, text="Delete", font=("Segoe UI", 10), width=10, bg="white", command=delete_product)
+delete_button = tk.Button(top_frame, text="Delete", font=(
+    "Segoe UI", 10), width=10, bg="white", command=delete_product)
 delete_button.pack(side="left", padx=10)
 
 
 def search():
     # get entry from search box then hanapin yung entry sa database
-    searchID = search_box.get();
+    searchID = search_box.get()
 
     # Get a certain value from the TreeView
 
@@ -478,7 +515,8 @@ def search():
 
 
 # search button
-search_button = tk.Button(top_frame, text="Search", font=("Segoe UI", 10), width=10, bg="white", command=search)
+search_button = tk.Button(top_frame, text="Search", font=(
+    "Segoe UI", 10), width=10, bg="white", command=search)
 search_button.pack(side="left", padx=10)
 
 # frame for records
@@ -486,7 +524,8 @@ list_frame = tk.Frame(root)
 list_frame.pack(fill="both", expand=True, padx=20, pady=20)
 
 # Table for records
-tbl_column = ('prodID', 'prodName', 'prodAvail', 'prodStocks', 'prodPrice', 'prodSize', 'prodCat')
+tbl_column = ('prodID', 'prodName', 'prodAvail', 'prodStocks',
+              'prodPrice', 'prodSize', 'prodCat')
 tbl_view = ttk.Treeview(list_frame, columns=tbl_column, show='headings')
 
 tbl_view.column("prodID", anchor=CENTER, stretch=NO, width=200)
@@ -533,6 +572,10 @@ def view():
         tbl_view.insert('', tk.END, values=record)
 
 
+def stats():
+    pass
+
+
 view()
 tbl_view.pack(fill="both", expand=True)
 
@@ -546,10 +589,12 @@ bottom_frame = tk.Frame(root)
 bottom_frame.pack(fill="x", padx=20, pady=20)
 
 # buttons
-view_graph_button = tk.Button(bottom_frame, text="View Graph", font=("Segoe UI", 10), width=10, bg="white")
+view_graph_button = tk.Button(bottom_frame, text="View Statistics", font=(
+    "Segoe UI", 10), width=10, bg="white", command=stats)
 view_graph_button.pack(side="left", padx=10)
 
-close_button = tk.Button(bottom_frame, text="Close", font=("Segoe UI", 10), width=10, bg="white", command=root.quit)
+close_button = tk.Button(bottom_frame, text="Close", font=(
+    "Segoe UI", 10), width=10, bg="white", command=root.quit)
 close_button.pack(side="left", padx=10)
 
 root.mainloop()

@@ -1,6 +1,4 @@
-# To install dependencies
-
-## RUN
+## To install dependencies
 
 ```
 pip install -r requirements.txt

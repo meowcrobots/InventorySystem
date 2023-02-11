@@ -3,7 +3,8 @@ from tkinter import ttk
 from tkinter import messagebox
 from tkinter import *
 import sqlite3
-
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from stats import *
 root = Tk()
 root.title("Inventory System")
 root.geometry("1200x600")
@@ -312,7 +313,7 @@ def edit_product():
     edit_window = tk.Toplevel(root)
     edit_window.title("Inventory System")
     edit_window.geometry("900x400")
-
+    
     # tile
     title = tk.Label(edit_window, text="EDIT PRODUCT",
                      font=("Times New Roman", 12))
@@ -571,11 +572,6 @@ def view():
     for record in records:
         tbl_view.insert('', tk.END, values=record)
 
-
-def stats():
-    pass
-
-
 view()
 tbl_view.pack(fill="both", expand=True)
 
@@ -588,9 +584,29 @@ sbar.pack(fill="both")
 bottom_frame = tk.Frame(root)
 bottom_frame.pack(fill="x", padx=20, pady=20)
 
+# Statistics Function
+def graph_data():
+    # Can add more graphs but idk what else to graph honestly
+    stats_window = tk.Toplevel(root)
+    stats_window.title("Inventory System Statistics")
+    stats_window.geometry("1200x600")
+
+    labels = [i for i in df['name']]
+    pie_chart = df.plot.pie(title="Stocks",y='stocks',
+        figsize=(6,5), labels=labels).get_figure();
+    
+    plot1 = FigureCanvasTkAgg(pie_chart, stats_window)
+    plot1.get_tk_widget().grid(row=2,column=1,padx=30,pady=30)
+    # print(df)
+    ndf = df.pivot_table(columns='name', values='price')
+    bar_chart = ndf.plot.bar(title="Prices",
+            figsize=(5,5)).get_figure();
+    plot2 = FigureCanvasTkAgg(bar_chart, stats_window)
+    plot2.get_tk_widget().grid(row=2,column=2,padx=30,pady=30)
+
 # buttons
 view_graph_button = tk.Button(bottom_frame, text="View Statistics", font=(
-    "Segoe UI", 10), width=10, bg="white", command=stats)
+    "Segoe UI", 10), width=15, bg="white", command=graph_data)
 view_graph_button.pack(side="left", padx=10)
 
 close_button = tk.Button(bottom_frame, text="Close", font=(

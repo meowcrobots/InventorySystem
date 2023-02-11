@@ -1,4 +1,4 @@
-# To insta;l dependencies
+# To install dependencies
 
 ## RUN
 

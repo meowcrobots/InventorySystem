@@ -493,27 +493,30 @@ def search():
     # get entry from search box then hanapin yung entry sa database
     searchID = search_box.get()
 
-    # Get a certain value from the TreeView
-
-    target_item = None
-    '''for item in tbl_view.get_children():
-        val = tbl_view.item(item, "val")
-        if val[0] == searchID:
-            target_item = item
-            break
-
-    if target_item:
-        val = tbl_view.item(target_item, "values")
-        print(f"Values for item {target_item}: {val}")
+    if (searchID == ""):
+        messagebox.showerror("Error", "Search Field is empty")
     else:
-        print("Target item not found")'''
+        # Get a certain value from the TreeView
 
-    for item in tbl_view.get_children():
-        tbl_view.delete(item)
+        target_item = None
+        '''for item in tbl_view.get_children():
+            val = tbl_view.item(item, "val")
+            if val[0] == searchID:
+                target_item = item
+                break
+
+        if target_item:
+            val = tbl_view.item(target_item, "values")
+            print(f"Values for item {target_item}: {val}")
+        else:
+            print("Target item not found")'''
+
+        for item in tbl_view.get_children():
+            tbl_view.delete(item)
         
-    c.execute("SELECT * FROM Inventory WHERE PID LIKE ?", (f'%{searchID}%',))
-    searchable_data = c.fetchall()
-    tbl_view.insert('', tk.END, values=searchable_data[0])
+        c.execute("SELECT * FROM Inventory WHERE PID LIKE ?", (f'%{searchID}%',))
+        searchable_data = c.fetchall()
+        tbl_view.insert('', tk.END, values=searchable_data[0])
 
 
 # search button
@@ -560,6 +563,8 @@ def view():
 
     for record in records:
         tbl_view.insert('', tk.END, values=record)
+    
+    search_box.insert(0, "")
 
 view()
 tbl_view.pack(fill="both", expand=True)

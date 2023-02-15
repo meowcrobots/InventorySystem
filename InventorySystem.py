@@ -5,6 +5,7 @@ from tkinter import *
 import sqlite3
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from stats import *
+
 root = Tk()
 root.title("Inventory System")
 root.geometry("1200x600")
@@ -495,7 +496,7 @@ def search():
     # Get a certain value from the TreeView
 
     target_item = None
-    for item in tbl_view.get_children():
+    '''for item in tbl_view.get_children():
         val = tbl_view.item(item, "val")
         if val[0] == searchID:
             target_item = item
@@ -505,12 +506,12 @@ def search():
         val = tbl_view.item(target_item, "values")
         print(f"Values for item {target_item}: {val}")
     else:
-        print("Target item not found")
+        print("Target item not found")'''
 
     for item in tbl_view.get_children():
         tbl_view.delete(item)
-
-    c.execute("SELECT * FROM Inventory WHERE PID = ?", (searchID))
+        
+    c.execute("SELECT * FROM Inventory WHERE PID LIKE ?", (f'%{searchID}%',))
     searchable_data = c.fetchall()
     tbl_view.insert('', tk.END, values=searchable_data[0])
 
@@ -549,18 +550,6 @@ tbl_view.heading("prodSize", text="Size")
 
 tbl_view.column("prodCat", anchor=CENTER, stretch=NO, width=350)
 tbl_view.heading("prodCat", text="Category")
-
-
-# # sample records
-# records = []  # Get actual records from DB
-# for n in range(1, 5):  # To be removed(?)
-#     records.append((f'ProdID{n}', f'ProdName{n}', f'Available',
-#                     f'{n}', f'150', f'L', f'Unisex, Pants'))
-#
-# # Writes the records to the GUI
-# for record in records:
-#     tbl_view.insert('', tk.END, values=record)
-
 
 def view():
     # Writes the records to the GUI
@@ -612,5 +601,9 @@ view_graph_button.pack(side="left", padx=10)
 close_button = tk.Button(bottom_frame, text="Close", font=(
     "Segoe UI", 10), width=10, bg="white", command=root.quit)
 close_button.pack(side="left", padx=10)
+
+btnView = tk.Button(bottom_frame, text="View Table", font=(
+    "Segoe UI", 10), width=15, bg="white", command=view)
+btnView.pack(side="left", padx=10)
 
 root.mainloop()

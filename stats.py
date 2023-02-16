@@ -26,3 +26,7 @@ for index, element in enumerate(table_data):
     
 df = pd.DataFrame(table_dict)
 print(df)
+
+conn.commit()
+
+conn.close()

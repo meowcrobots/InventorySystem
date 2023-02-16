@@ -1,3 +1,12 @@
+'''-----Group 7 Members-----
+---------------------------------
+Javier, Joyce Marie
+Mejia, Juan Paulo
+Ordanza, Virgielyn
+Panganiban, Trisha Mae
+Santos, Juan Francisco
+'''
+
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
@@ -285,9 +294,9 @@ def edit_product():
         # pangcheck nung inedit na data
         data = {"number": product_id,
                 "name": name,
+                "fabric": price,
                 "stock": stocks,
-                "price": price,
-                "availability": avails,
+                "price": avails,
                 "size:": cl_size,
                 "category": cl_category}
 
@@ -298,13 +307,13 @@ def edit_product():
         c.execute('''UPDATE Inventory SET
                PID = ?,
                name = ?,
+               avail = ?,
                stocks = ?,
                price = ?,
-               avail = ?,
                size = ?,
                category = ?
                WHERE PID = ? AND name = ?
-               ''', (product_id, name, avails, stocks, price, cl_size, cl_category, selected_data[0], selected_data[1]))
+               ''', (product_id, name, price, stocks, avails, cl_size, cl_category, selected_data[0], selected_data[1]))
         conn.commit()
         view()
         edit_window.destroy()
@@ -314,7 +323,7 @@ def edit_product():
     edit_window = tk.Toplevel(root)
     edit_window.title("Inventory System")
     edit_window.geometry("900x400")
-    
+
     # tile
     title = tk.Label(edit_window, text="EDIT PRODUCT",
                      font=("Times New Roman", 12))
@@ -513,7 +522,7 @@ def search():
 
         for item in tbl_view.get_children():
             tbl_view.delete(item)
-        
+
         c.execute("SELECT * FROM Inventory WHERE PID LIKE ?", (f'%{searchID}%',))
         searchable_data = c.fetchall()
         tbl_view.insert('', tk.END, values=searchable_data[0])
@@ -554,6 +563,7 @@ tbl_view.heading("prodSize", text="Size")
 tbl_view.column("prodCat", anchor=CENTER, stretch=NO, width=350)
 tbl_view.heading("prodCat", text="Category")
 
+
 def view():
     # Writes the records to the GUI
     records = c.execute("SELECT * FROM Inventory")
@@ -563,8 +573,9 @@ def view():
 
     for record in records:
         tbl_view.insert('', tk.END, values=record)
-    
+
     search_box.insert(0, "")
+
 
 view()
 tbl_view.pack(fill="both", expand=True)
@@ -577,6 +588,7 @@ sbar.pack(fill="both")
 # frame for the View Graph and Close buttons
 bottom_frame = tk.Frame(root)
 bottom_frame.pack(fill="x", padx=20, pady=20)
+
 
 # Statistics Function
 def graph_data():
@@ -598,6 +610,7 @@ def graph_data():
     plot2 = FigureCanvasTkAgg(bar_chart, stats_window)
     plot2.get_tk_widget().grid(row=2,column=2,padx=30,pady=30)
 
+
 # buttons
 view_graph_button = tk.Button(bottom_frame, text="View Statistics", font=(
     "Segoe UI", 10), width=15, bg="white", command=graph_data)
@@ -612,3 +625,4 @@ btnView = tk.Button(bottom_frame, text="View Table", font=(
 btnView.pack(side="left", padx=10)
 
 root.mainloop()
+conn.close()
